@@ -5,12 +5,16 @@
  */
 package p2_piedrapapeltijera;
 
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author Alejandro Campos Maestre
  */
 public class ventana extends javax.swing.JFrame
 {
+
+    logicaPrincipal logica = new logicaPrincipal();
 
     /**
      * Creates new form logica
@@ -19,7 +23,6 @@ public class ventana extends javax.swing.JFrame
     {
         super("Juego de Piedra, papel, tijera, lagarto, Spok");
         initComponents();
-
     }
 
     /**
@@ -37,8 +40,8 @@ public class ventana extends javax.swing.JFrame
         tijera = new javax.swing.JButton();
         lagarto = new javax.swing.JButton();
         Spok = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,42 +64,61 @@ public class ventana extends javax.swing.JFrame
         });
 
         tijera.setText("Tijera");
+        tijera.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                tijeraActionPerformed(evt);
+            }
+        });
 
         lagarto.setText("Lagarto");
+        lagarto.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                lagartoActionPerformed(evt);
+            }
+        });
 
-        Spok.setText("Spok");
+        Spok.setText("Spock");
+        Spok.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                SpokActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Elija una de las 5 opciones:");
+
+        jLabel2.setText("Victorias: Jugador "+logica.getvJugador()+" vs maquina "+logica.getvMaquina());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(piedra)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(piedra)
-                                .addGap(18, 18, 18)
-                                .addComponent(papel)
-                                .addGap(18, 18, 18)
-                                .addComponent(tijera)
-                                .addGap(18, 18, 18)
-                                .addComponent(lagarto)
-                                .addGap(18, 18, 18)
-                                .addComponent(Spok))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(187, 187, 187)
-                        .addComponent(jLabel1)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                        .addComponent(papel)
+                        .addGap(18, 18, 18)
+                        .addComponent(tijera)
+                        .addGap(18, 18, 18)
+                        .addComponent(lagarto)
+                        .addGap(18, 18, 18)
+                        .addComponent(Spok)))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
+                .addGap(52, 52, 52)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -105,9 +127,9 @@ public class ventana extends javax.swing.JFrame
                     .addComponent(tijera)
                     .addComponent(lagarto)
                     .addComponent(Spok))
-                .addGap(43, 43, 43)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
@@ -115,14 +137,39 @@ public class ventana extends javax.swing.JFrame
 
     private void piedraActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_piedraActionPerformed
     {//GEN-HEADEREND:event_piedraActionPerformed
-        // TODO add your handling code here:
-        // Si tocan la piedra
+        logica.jugada(0);
+        actualizarPantalla();
     }//GEN-LAST:event_piedraActionPerformed
 
     private void papelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_papelActionPerformed
     {//GEN-HEADEREND:event_papelActionPerformed
-        // TODO add your handling code here:
+        logica.jugada(1);
+        actualizarPantalla();
     }//GEN-LAST:event_papelActionPerformed
+
+    private void tijeraActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_tijeraActionPerformed
+    {//GEN-HEADEREND:event_tijeraActionPerformed
+        logica.jugada(2);
+        actualizarPantalla();
+    }//GEN-LAST:event_tijeraActionPerformed
+
+    private void lagartoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_lagartoActionPerformed
+    {//GEN-HEADEREND:event_lagartoActionPerformed
+        logica.jugada(3);
+        actualizarPantalla();
+    }//GEN-LAST:event_lagartoActionPerformed
+
+    private void SpokActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_SpokActionPerformed
+    {//GEN-HEADEREND:event_SpokActionPerformed
+        logica.jugada(4);
+        actualizarPantalla();
+    }//GEN-LAST:event_SpokActionPerformed
+
+    public void actualizarPantalla()
+    {
+        this.remove(jLabel2);
+        initComponents();
+    }
 
     /**
      * @param args the command line arguments
@@ -173,7 +220,7 @@ public class ventana extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Spok;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JButton lagarto;
     private javax.swing.JButton papel;
     private javax.swing.JButton piedra;
